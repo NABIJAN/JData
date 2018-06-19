@@ -48,7 +48,6 @@ wa = pd.concat([wa_train,wa_test],axis=0)
 
 voice['call_time'] = voice['end_time'] - voice['start_time']
 
-
 voice_opp_num = voice.groupby(['uid'])['opp_num'].agg({'unique_count': lambda x: len(pd.unique(x)),'count':'count'}).add_prefix('voice_opp_num_').reset_index()
 
 voice_opp_head=voice.groupby(['uid'])['opp_head'].agg({'unique_count': lambda x: len(pd.unique(x))}).add_prefix('voice_opp_head_').reset_index()
@@ -59,9 +58,19 @@ voice_call_type = voice.groupby(['uid','call_type'])['uid'].count().unstack().ad
 
 voice_in_out = voice.groupby(['uid','in_out'])['uid'].count().unstack().add_prefix('voice_in_out_').reset_index().fillna(0)
 
-voice_call_time=voice.groupby(['uid'])['call_time'].agg(['std','max','min','mean','sum','var','mad','median']).add_prefix('voice_call_time_').reset_index().fillna(0)
+voice_call_time=voice.groupby(['uid'])['call_time'].agg(['std','max','min','mean','sum','var','median']).add_prefix('voice_call_time_').reset_index().fillna(0)
 
-
+print(voice_opp_num.head(5))
+print('####################')
+print(voice_opp_head.head(5))
+print('####################')
+print(voice_opp_len.head(5))
+print('####################')
+print(voice_call_type.head(5))
+print('####################')
+print(voice_in_out.head(5))
+print('####################')
+print(voice_call_time.head(5))
 # ## 短信记录
 
 # In[ ]:
@@ -77,23 +86,45 @@ sms_opp_len=sms.groupby(['uid','opp_len'])['uid'].count().unstack().add_prefix('
 sms_in_out = sms.groupby(['uid','in_out'])['uid'].count().unstack().add_prefix('sms_in_out_').reset_index().fillna(0)
 
 
+print('####################')
+print(sms_opp_num.head(5))
+print('####################')
+print(sms_opp_head.head(5))
+print('####################')
+print(sms_opp_len.head(5))
+print('####################')
+print(sms_in_out.head(5))
+
 # ### 网站/APP记录
 
 # In[ ]:
 
 
 wa_name = wa.groupby(['uid'])['wa_name'].agg({'unique_count': lambda x: len(pd.unique(x)),'count':'count'}).add_prefix('wa_name_').reset_index()
-visit_cnt = wa.groupby(['uid'])['visit_cnt'].agg(['std','max','min','median','mean','sum','var','mad']).add_prefix('wa_visit_cnt_').reset_index()
+visit_cnt = wa.groupby(['uid'])['visit_cnt'].agg(['std','max','min','median','mean','sum','var']).add_prefix('wa_visit_cnt_').reset_index()
 
-visit_dura = wa.groupby(['uid'])['visit_dura'].agg(['std','max','min','median','mean','sum','var','mad']).add_prefix('wa_visit_dura_').reset_index()
+visit_dura = wa.groupby(['uid'])['visit_dura'].agg(['std','max','min','median','mean','sum','var']).add_prefix('wa_visit_dura_').reset_index()
 
 
-up_flow = wa.groupby(['uid'])['up_flow'].agg(['std','max','min','median','mean','sum','var','mad']).add_prefix('wa_up_flow_').reset_index()
+up_flow = wa.groupby(['uid'])['up_flow'].agg(['std','max','min','median','mean','sum','var']).add_prefix('wa_up_flow_').reset_index()
 
-down_flow = wa.groupby(['uid'])['down_flow'].agg(['std','max','min','median','mean','sum','var','mad']).add_prefix('wa_down_flow_').reset_index()
+down_flow = wa.groupby(['uid'])['down_flow'].agg(['std','max','min','median','mean','sum','var']).add_prefix('wa_down_flow_').reset_index()
 
 wa_type = wa.groupby(['uid','wa_type'])['uid'].count().unstack().add_prefix('wa_type_').reset_index().fillna(0)
 
+
+print('####################')
+print(wa_name.head(5))
+print('####################')
+print(visit_cnt.head(5))
+print('####################')
+print(visit_dura.head(5))
+print('####################')
+print(up_flow.head(5))
+print('####################')
+print(down_flow.head(5))
+print('####################')
+print(wa_type.head(5))
 # In[ ]:
 
 
